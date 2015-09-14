@@ -55,7 +55,7 @@ GEM
       htmlentities (~> 4.3.1)
       nokogiri (>= 1.4.1)
       rubyzip (~> 1.0.0)
-    axlsx_rails (0.4.0)
+    axlsx_rails (0.3.0)
       axlsx (>= 2.0.1)
       rails (>= 3.1)
     binding_of_caller (0.7.2)

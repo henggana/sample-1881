@@ -111,7 +111,35 @@ class CatalogsController < ApplicationController
           if catalog_res.status == 200
             res = Hash.from_xml(catalog_res.body)
             if res['SearchResponse'] && res['SearchResponse']['Results']
-              @catalogs << res['SearchResponse']['Results']['ResultItem']
+              catalog = res['SearchResponse']['Results']['ResultItem']
+              phone = ''
+              if catalog.is_a? Array
+                if catalog[0]['ContactPoints'] && catalog[0]['ContactPoints']['ContactPoint_Search']
+                  cps = catalog[0]['ContactPoints']['ContactPoint_Search']
+                  if cps.is_a? Array
+                    found = cps.find {|phone| phone['ContactPointType'] == 'Mobile' && phone['IsMain'] == 'true'}
+                    phone = found.try(:[], 'Address')
+                  else
+                    if cps['ContactPointType'] == 'Mobile' && cps['IsMain'] == 'true'
+                      phone = cps.try(:[], 'Address') 
+                    end
+                  end
+                end
+                @catalogs << res['SearchResponse']['Results']['ResultItem'][0].merge('MainPhone' => phone)
+              else
+                if catalog['ContactPoints'] && catalog['ContactPoints']['ContactPoint_Search']
+                  cps = catalog['ContactPoints']['ContactPoint_Search']
+                  if cps.is_a? Array
+                    found = cps.find {|phone| phone['ContactPointType'] == 'Mobile' && phone['IsMain'] == 'true'}
+                    phone = found.try(:[], 'Address')
+                  else
+                    if cps['ContactPointType'] == 'Mobile' && cps['IsMain'] == 'true'
+                      phone = cps.try(:[], 'Address') 
+                    end
+                  end
+                end
+                @catalogs << res['SearchResponse']['Results']['ResultItem'].merge('MainPhone' => phone)
+              end
             else
               @catalogs << {}
             end
@@ -119,7 +147,8 @@ class CatalogsController < ApplicationController
         end
       end
     end
-    # respond_to do |format| 
-    render xlsx: 'export', filename: "payments.xlsx"
+    respond_to do |format| 
+       format.xlsx {render xlsx: 'export', filename: "payments.xlsx", layout: false}
+    end
   end
 end
