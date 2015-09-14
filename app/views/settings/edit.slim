@@ -1,0 +1,19 @@
+.ui.grid.container
+  .row
+    .sixteen.wide.column
+      h2 Update Setting
+      = simple_form_for @setting, url: settings_path, method: :patch, html: { class: 'ui form' } do |f|
+        .field
+          = f.input :smspay_user, placeholder: "Smspay username"
+        .field
+          = f.input :smspay_password, as: :string, placeholder: "Smspay password"
+        .field
+          = f.input :smspay_base_url, placeholder: "default: http://api.smspay.devz.no"
+        .field
+          = f.input :catalog_user, placeholder: "Catalog username"
+        .field
+          = f.input :catalog_msisdn, placeholder: "Catalog MSISDN"
+        .field
+          = f.input :catalog_password, as: :string, placeholder: "Catalog password"
+        = f.submit class: 'ui primary button', value: 'Save'
+

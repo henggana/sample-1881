@@ -1,0 +1,19 @@
+.ui.grid.container
+  .row
+    .sixteen.wide.column
+      = link_to 'Catalog by this orders', '', class: 'ui button primary'
+      table.ui.celled.striped.table
+        thead
+          tr
+            th Phone
+            th Status
+            th Last updated
+        tbody
+          - @payments.each do |payment|
+            tr
+              td.collapsing
+                = payment['phone']
+              td
+                = payment['status']
+              td
+                = DateTime.parse(payment['meta']['updated_at'])

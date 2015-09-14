@@ -1,0 +1,35 @@
+.ui.grid.container
+  .row
+    .sixteen.wide.column
+      = link_to 'Catalog by this orders', '', class: 'ui button primary'
+      table.ui.celled.striped.table
+        thead
+          tr
+            th Phone
+            th FirstName
+            th LastName
+            th Type
+        tbody
+          - @catalogs.each do |catalog|
+            - if catalog['SearchResponse']['Results']
+              tr
+                td
+                | phone
+                td
+                  = catalog['SearchResponse']['Results']['ResultItem']['FirstName']
+                td
+                  = catalog['SearchResponse']['Results']['ResultItem']['LastName']
+                td
+                  = catalog['SearchResponse']['Results']['ResultItem']['ResultType']
+            - else
+              tr
+                td
+                | -- Empty -- 
+                td
+                | -- Empty -- 
+                td
+                | -- Empty -- 
+                td
+                | -- Empty -- 
+
+          

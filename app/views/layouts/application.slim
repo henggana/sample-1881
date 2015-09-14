@@ -1,0 +1,29 @@
+doctype html
+html
+head
+  title Sample1881
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolink-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+
+  body
+    = debug session[:setting]
+    .ui.grid.container
+      .row
+        .sixteen.wide.column
+          .ui.menu
+            .header.item
+              = link_to '1881 Sample', root_path
+            - if session[:setting].present?
+              .item
+                = link_to 'Orders', orders_path
+            .right.menu
+              = link_to 'Settings', edit_setting_path, class: 'ui item'
+    - if flash[:success] || flash[:alert]
+      .ui.grid.container
+        .row
+          .sixteen.wide.column
+            = semantic_flash
+
+
+    = yield
