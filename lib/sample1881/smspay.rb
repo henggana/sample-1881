@@ -42,7 +42,7 @@ module Sample1881
         req.params = {
           status: 'COMPLETED',
           merchant: '648862675810',
-          limit: 50
+          limit: 10
         }
       end
     end

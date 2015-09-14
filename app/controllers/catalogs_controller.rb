@@ -22,12 +22,24 @@ class CatalogsController < ApplicationController
           msisdn: session[:setting]['catalog_msisdn'],
           password: session[:setting]['catalog_password']
         )
-        @payments.each do |payment|
-          res = catalog.by_phone(payment['phone'])
-          if res.status == 200
-            @catalogs << Hash.from_xml(res.body)
-          else
-            @catalogs << {}
+
+        stop_search = false
+        page = 1
+        pageSize = 300
+
+        catalogs_res = catalog.by_page(300, 1)
+        if catalogs_res.status == 200
+          catalogs = Hash.from_xml(catalogs_res.body)
+          if catalogs['SearchResponse']['Results']
+            catalogs['SearchResponse']['Results']['ResultItem'].each do |cat|
+              @payemnts.each do |payment|
+                if cat['ContactPoints']['ContactPoints_Search'].is_a? Array
+                  if cat['ContactPoints']['ContactPoints_Search'].find { |con| con['Address'] =  }
+                elsif cat['ContactPoints']['ContactPoints_Search'].is_a? Hash
+                  
+                end
+              end
+            end
           end
         end
       end

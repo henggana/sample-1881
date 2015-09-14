@@ -14,22 +14,31 @@
             - if catalog['SearchResponse']['Results']
               tr
                 td
-                | phone
+                  | phone
                 td
-                  = catalog['SearchResponse']['Results']['ResultItem']['FirstName']
+                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
+                    = catalog['SearchResponse']['Results']['ResultItem'][0]['FirstName']
+                  - else
+                    = catalog['SearchResponse']['Results']['ResultItem']['FirstName']
                 td
-                  = catalog['SearchResponse']['Results']['ResultItem']['LastName']
+                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
+                    = catalog['SearchResponse']['Results']['ResultItem'][0]['LastName']
+                  - else
+                    = catalog['SearchResponse']['Results']['ResultItem']['LastName']
                 td
-                  = catalog['SearchResponse']['Results']['ResultItem']['ResultType']
+                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
+                    = catalog['SearchResponse']['Results']['ResultItem'][0]['ResultType']
+                  - else
+                    = catalog['SearchResponse']['Results']['ResultItem']['ResultType']
             - else
               tr
                 td
-                | -- Empty -- 
+                  | -- Empty -- 
                 td
-                | -- Empty -- 
+                  | -- Empty -- 
                 td
-                | -- Empty -- 
+                  | -- Empty -- 
                 td
-                | -- Empty -- 
+                  | -- Empty -- 
 
           

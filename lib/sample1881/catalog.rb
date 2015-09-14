@@ -29,5 +29,20 @@ module Sample1881
         }
       end
     end
+
+    def by_page(page_size, page)
+      connection.get do |req|
+        req.url 'search/search'
+        req.params = {
+          userName: options[:userName],
+          msisdn: options[:msisdn],
+          password: options[:password],
+          level: 1,
+          pageSize: page_size,
+          page: page,
+          query: 'null'
+        }
+      end
+    end
   end
 end
