@@ -5,5 +5,9 @@ Rails.application.routes.draw do
   patch 'settings', to: 'settings#update'
 
   resources :orders
-  resources :catalogs
+  resources :catalogs do
+    collection do
+      get :export
+    end
+  end
 end

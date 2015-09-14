@@ -1,7 +1,7 @@
 .ui.grid.container
   .row
     .sixteen.wide.column
-      = link_to 'Catalog by this orders', '', class: 'ui button primary'
+      = link_to 'Export', "#{export_catalogs_path}.xlsx", class: 'ui button primary'
       table.ui.celled.striped.table
         thead
           tr
@@ -11,25 +11,25 @@
             th Type
         tbody
           - @catalogs.each do |catalog|
-            - if catalog['SearchResponse']['Results']
+            - if catalog.present?
               tr
                 td
                   | phone
                 td
-                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
-                    = catalog['SearchResponse']['Results']['ResultItem'][0]['FirstName']
+                  - if catalog.is_a?(Array)
+                    = catalog[0]['FirstName']
                   - else
-                    = catalog['SearchResponse']['Results']['ResultItem']['FirstName']
+                    = catalog['FirstName']
                 td
-                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
-                    = catalog['SearchResponse']['Results']['ResultItem'][0]['LastName']
+                  - if catalog.is_a?(Array)
+                    = catalog[0]['LastName']
                   - else
-                    = catalog['SearchResponse']['Results']['ResultItem']['LastName']
+                    = catalog['LastName']
                 td
-                  - if catalog['SearchResponse']['Results']['ResultItem'].is_a?(Array)
-                    = catalog['SearchResponse']['Results']['ResultItem'][0]['ResultType']
+                  - if catalog.is_a?(Array)
+                    = catalog[0]['ResultType']
                   - else
-                    = catalog['SearchResponse']['Results']['ResultItem']['ResultType']
+                    = catalog['ResultType']
             - else
               tr
                 td

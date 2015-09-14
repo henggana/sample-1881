@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Payments") do |sheet|
+    sheet.add_row ["Phone", "FirtsName", "LastName", "Type"]
+    # @catalogs.each do |catalog|
+    #   if catalog.present?
+    #     phone = 'phone'
+    #     if catalog.is_a? Array
+    #       firstname = catalog[0]['FirstName']
+    #       lastname = catalog[0]['LastName']
+    #       result_type = catalog[0]['ResultType']
+    #     else
+    #       firstname = catalog['FirstName']
+    #       lastname = catalog['LastName']
+    #       result_type = catalog['ResultType']
+    #     end
+    #     sheet.add_row [phone, firstname, lastname, result_type]
+    #   else
+      
+    #   end
+    # end
+end

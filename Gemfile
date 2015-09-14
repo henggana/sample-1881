@@ -13,6 +13,8 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'slim'
 gem 'simple_form'
+gem 'axlsx', '~> 2.0'
+gem "axlsx_rails"
 
 group :development, :test do
   gem 'pry'

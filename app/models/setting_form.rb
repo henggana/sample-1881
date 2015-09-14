@@ -7,7 +7,7 @@ class SettingForm
 
   attr_accessor :smspay_user, :smspay_password, :smspay_base_url, :catalog_user, :catalog_msisdn, :catalog_password
 
-  def initialize(attributes)
+  def initialize(attributes = {})
     attributes.try(:each) do |name, value|
       send("#{name}=", value)
     end
