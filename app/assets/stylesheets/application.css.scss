@@ -14,4 +14,19 @@
  *= require_self
  */
 
-@import "semantic-ui";
+// @import "semantic-ui";
+
+@import "semantic-ui/globals/all";
+
+@import "semantic-ui/collections/grid";
+@import "semantic-ui/collections/menu";
+@import "semantic-ui/collections/form";
+@import "semantic-ui/collections/message";
+
+@import "semantic-ui/elements/button";
+@import "semantic-ui/elements/container";
+@import "semantic-ui/elements/header";
+@import "semantic-ui/elements/header";
+@import "semantic-ui/elements/icon";
+
+@import "semantic-ui/modules/transition";
