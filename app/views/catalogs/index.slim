@@ -9,29 +9,43 @@
             th FirstName
             th LastName
             th Type
+            th Address
         tbody
-          - @catalogs.each do |catalog|
+          - @payments.each do |payment|
+            - catalog = @catalogs[payment['phone']]
             - if catalog.present?
               tr
                 td
-                  | phone
-                td
-                  - if catalog.is_a?(Array)
-                    = catalog[0]['FirstName']
-                  - else
-                    = catalog['FirstName']
-                td
-                  - if catalog.is_a?(Array)
+                  = payment['phone']
+                - if catalog.is_a?(Array)
+                  td
+                    - if catalog[0]['ResultType'] == 'Company'
+                      = catalog[0]['CompanyName']
+                    - else
+                      = catalog[0]['FirstName']
+                  td
                     = catalog[0]['LastName']
-                  - else
-                    = catalog['LastName']
-                td
-                  - if catalog.is_a?(Array)
+                  td
                     = catalog[0]['ResultType']
-                  - else
+                - else
+                  td
+                    - if catalog['ResultType'] == 'Company'
+                      = catalog['CompanyName']
+                    - else
+                      = catalog['FirstName']
+                  td
+                    = catalog['LastName']
+                  td
                     = catalog['ResultType']
+                  td
+                    - if catalog['Addresses']['Address_Search'].is_a? Array
+                      = catalog['Addresses']['Address_Search'][0]['FormattedAddress']
+                    - else
+                      = catalog['Addresses']['Address_Search']['FormattedAddress']
             - else
               tr
+                td
+                  = payment['phone']
                 td
                   | -- Empty -- 
                 td

@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :ensure_setting
+
   def index
     @start = 0
     @limit = 0

@@ -1,9 +1,10 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Payments") do |sheet|
-    sheet.add_row ["Phone", "FirtsName", "LastName", "Type"]
-    @catalogs.each do |catalog|
+    sheet.add_row ["Phone", "FirtsName", "LastName", "Type", "Address"]
+    @payments.each do |payment|
+      catalog = @catalogs[payment['phone']]
+      phone = payment['phone']
       if catalog.present?
-        phone = catalog.try(:[], 'MainPhone')
         if catalog.is_a? Array
           result_type = catalog[0]['ResultType']
           if result_type == 'Company'
@@ -12,6 +13,11 @@ wb.add_worksheet(name: "Payments") do |sheet|
             firstname = catalog[0]['FirstName']
           end
           lastname = catalog[0]['LastName']
+          if catalog[0]['Addresses']['Address_Search'].is_a? Array
+            address = catalog[0]['Addresses']['Address_Search'][0]['FormattedAddress']
+          else
+            address = catalog[0]['Addresses']['Address_Search']['FormattedAddress']
+          end
         elsif catalog.is_a? Hash
           result_type = catalog['ResultType']
           if result_type == 'Company'
@@ -20,10 +26,15 @@ wb.add_worksheet(name: "Payments") do |sheet|
             firstname = catalog['FirstName']
           end
           lastname = catalog['LastName']
+          if catalog['Addresses']['Address_Search'].is_a? Array
+            address = catalog['Addresses']['Address_Search'][0]['FormattedAddress']
+          else
+            address = catalog['Addresses']['Address_Search']['FormattedAddress']
+          end
         end
-        sheet.add_row([phone, firstname, lastname, result_type])
+        sheet.add_row([phone, firstname, lastname, result_type, address])
       else
-      
+        sheet.add_row([phone, '-- empty --', '-- empty --', '-- empty --', '-- empty --'])
       end
     end
 end
