@@ -114,18 +114,21 @@ class CatalogsController < ApplicationController
               catalog = res['SearchResponse']['Results']['ResultItem']
               phone = ''
               if catalog.is_a? Array
-                if catalog[0]['ContactPoints'] && catalog[0]['ContactPoints']['ContactPoint_Search']
-                  cps = catalog[0]['ContactPoints']['ContactPoint_Search']
-                  if cps.is_a? Array
-                    found = cps.find {|phone| phone['ContactPointType'] == 'Mobile' && phone['IsMain'] == 'true'}
-                    phone = found.try(:[], 'Address')
-                  else
-                    if cps['ContactPointType'] == 'Mobile' && cps['IsMain'] == 'true'
-                      phone = cps.try(:[], 'Address') 
+                catalog.each do |cat|
+                  if cat['ContactPoints'] && cat['ContactPoints']['ContactPoint_Search']
+                    cps = cat['ContactPoints']['ContactPoint_Search']
+                    if cps.is_a? Array
+                      found = cps.find {|phone| phone['ContactPointType'] == 'Mobile' && phone['IsMain'] == 'true'}
+                      phone = found.try(:[], 'Address')
+                      @catalogs << cat.merge('MainPhone' => phone)
+                    else
+                      if cps['ContactPointType'] == 'Mobile' && cps['IsMain'] == 'true'
+                        phone = cps.try(:[], 'Address') 
+                        @catalogs << cat.merge('MainPhone' => phone)
+                      end
                     end
                   end
                 end
-                @catalogs << res['SearchResponse']['Results']['ResultItem'][0].merge('MainPhone' => phone)
               else
                 if catalog['ContactPoints'] && catalog['ContactPoints']['ContactPoint_Search']
                   cps = catalog['ContactPoints']['ContactPoint_Search']

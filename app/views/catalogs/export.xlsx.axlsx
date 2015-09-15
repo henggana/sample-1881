@@ -5,13 +5,23 @@ wb.add_worksheet(name: "Payments") do |sheet|
       if catalog.present?
         phone = catalog.try(:[], 'MainPhone')
         if catalog.is_a? Array
+          result_type = catalog[0]['ResultType']
+          if result_type == 'Company'
+            firstname = catalog[0]['CompanyName']
+          else
+            firstname = catalog[0]['FirstName']
+          end
           firstname = catalog[0]['FirstName']
           lastname = catalog[0]['LastName']
-          result_type = catalog[0]['ResultType']
         elsif catalog.is_a? Hash
+          result_type = catalog['ResultType']
+          if result_type == 'Company'
+            firstname = catalog['CompanyName']
+          else
+            firstname = catalog['FirstName']
+          end
           firstname = catalog['FirstName']
           lastname = catalog['LastName']
-          result_type = catalog['ResultType']
         end
         sheet.add_row([phone, firstname, lastname, result_type])
       else
