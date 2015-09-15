@@ -11,8 +11,6 @@ wb.add_worksheet(name: "Payments") do |sheet|
           else
             firstname = catalog[0]['FirstName']
           end
-          firstname = catalog[0]['FirstName']
-          lastname = catalog[0]['LastName']
         elsif catalog.is_a? Hash
           result_type = catalog['ResultType']
           if result_type == 'Company'
@@ -20,8 +18,6 @@ wb.add_worksheet(name: "Payments") do |sheet|
           else
             firstname = catalog['FirstName']
           end
-          firstname = catalog['FirstName']
-          lastname = catalog['LastName']
         end
         sheet.add_row([phone, firstname, lastname, result_type])
       else
