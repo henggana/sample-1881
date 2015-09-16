@@ -1,0 +1,41 @@
+.ui.grid.sixteen.wide.column.container
+  .column
+    .ui.sixteen.column.grid
+      .column
+        = link_to 'Export', export_contacts_path(format: 'xlsx'), class: 'ui button primary'
+    .ui.sixteen.column.grid
+      .column
+        .record-info
+          .ui.label
+            | Total
+            .detail = @contacts.count
+    table.ui.celled.striped.table
+      thead
+        tr
+          th Phone
+          th Result Type
+          th First Name
+          th Last Name
+          th Company Name
+          th Address
+          th City
+          th Postal Code
+      tbody
+        - @contacts.each do |contact|
+          tr
+            td.collapsing
+              = contact.phone
+            td
+              = contact.result_type
+            td
+              = contact.first_name
+            td
+              = contact.last_name
+            td
+              = contact.company_name
+            td
+              = contact.address
+            td
+              = contact.city
+            td
+              = contact.postal_code

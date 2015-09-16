@@ -1,5 +1,7 @@
     .ui.grid.eight.column.centered
       h1 1881 + Smspay Sample App
+    .ui.grid.eight.column.centered
+        = link_to "Import all", import_all_contacts_path, class: "ui button primary"
     - unless session[:setting].present?
       .ui.grid.eight.column.centered
         h3 Please

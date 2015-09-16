@@ -34,7 +34,7 @@ module Sample1881
       end
     end
 
-    def orders
+    def orders(limit = 10)
       payments = connection.get do |req|
         req.url 'v1/payments'
         req.headers['Authorization'] = @token
@@ -42,7 +42,7 @@ module Sample1881
         req.params = {
           status: 'COMPLETED',
           merchant: '648862675810',
-          limit: 10
+          limit: limit
         }
       end
     end

@@ -1,0 +1,23 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Payments") do |sheet|
+    sheet.add_row([
+      "Phone",
+      "FirtsName",
+      "LastName",
+      "Type",
+      "Address",
+      "City",
+      "Postal Code"
+    ])
+    @contacts.each do |contact|
+      sheet.add_row([
+        contact.phone,
+        contact.first_name,
+        contact.last_name,
+        contact.result_type,
+        contact.address,
+        contact.city,
+        contact.postal_code
+      ])
+    end
+end

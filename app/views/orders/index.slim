@@ -1,19 +1,28 @@
-.ui.grid.container
-  .row
-    .sixteen.wide.column
-      = link_to 'Catalog by this orders', catalogs_path, class: 'ui button primary'
-      table.ui.celled.striped.table
-        thead
+.ui.grid.sixteen.wide.column.container
+  .column
+    .ui.sixteen.column.grid
+      .sixteen.wide.column
+        = link_to 'Catalog by this orders', catalogs_path, class: 'ui button primary'
+        = link_to 'Update from smspay', pull_orders_path, class: 'ui button primary'
+        = link_to 'Refresh from smspay', pull_orders_path(refresh: true), class: 'ui button primary'
+    .ui.sixteen.column.grid
+      .column
+        .record-info
+          .ui.label
+            | Total
+            .detail = @orders.count    
+    table.ui.celled.striped.table
+      thead
+        tr
+          th Phone
+          th Status
+          th Last updated
+      tbody
+        - @orders.each do |order|
           tr
-            th Phone
-            th Status
-            th Last updated
-        tbody
-          - @payments.each do |payment|
-            tr
-              td.collapsing
-                = payment['phone']
-              td
-                = payment['status']
-              td
-                = DateTime.parse(payment['meta']['updated_at'])
+            td.collapsing
+              = order.phone
+            td
+              = order.status
+            td
+              = DateTime.parse(JSON.parse(order.meta)['updated_at'])
